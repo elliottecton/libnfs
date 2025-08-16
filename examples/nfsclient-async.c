@@ -29,18 +29,16 @@ WSADATA wsaData;
 #include <sys/stat.h>
 #endif
  
-#ifdef HAVE_POLL_H
 #include <poll.h>
-#endif
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#define SERVER "10.1.1.27"
-#define EXPORT "/VIRTUAL"
-#define NFSFILE "/BOOKS/Classics/Dracula.djvu"
-#define NFSDIR "/BOOKS/Classics/"
+#define SERVER "10.192.164.136"
+#define EXPORT "/unix_flexvol"
+#define NFSFILE "/kuberos_test/file1"
+#define NFSDIR "/kuberos_test/"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -234,7 +232,7 @@ void nfs_mount_cb(int status, struct nfs_context *nfs, void *data, void *private
 
 
 
-int main(int argc _U_, char *argv[] _U_)
+int main(int argc, char *argv[])
 {
 	struct nfs_context *nfs;
 	int ret;
@@ -257,6 +255,9 @@ int main(int argc _U_, char *argv[] _U_)
 		printf("failed to init context\n");
 		exit(10);
 	}
+
+	// Force Kerberos authentication
+	nfs_set_security(nfs, RPC_SEC_KRB5);
 
 	ret = nfs_mount_async(nfs, client.server, client.export, nfs_mount_cb, &client);
 	if (ret != 0) {
