@@ -35,7 +35,7 @@ WSADATA wsaData;
 #include <unistd.h>
 #endif
 
-#define SERVER "10.192.164.136"
+#define SERVER "cache1g-data"
 #define EXPORT "/unix_flexvol"
 #define NFSFILE "/kuberos_test/file1"
 #define NFSDIR "/kuberos_test/"
